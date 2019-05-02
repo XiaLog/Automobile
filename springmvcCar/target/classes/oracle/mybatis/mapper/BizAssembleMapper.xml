@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="oracle.dao.BizAssembleMapper">
+  <resultMap id="BaseResultMap" type="oracle.mybatis.vo.BizAssemble">
+    <id column="AssembleId" jdbcType="INTEGER" property="assembleid" />
+    <result column="PartsId" jdbcType="INTEGER" property="partsid" />
+    <result column="ProductId" jdbcType="INTEGER" property="productid" />
+    <result column="PartsCount" jdbcType="INTEGER" property="partscount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    AssembleId, PartsId, ProductId, PartsCount
+  </sql>
+  <select id="selectByExample" parameterType="oracle.mybatis.vo.BizAssembleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from biz_assemble
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from biz_assemble
+    where AssembleId = #{assembleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from biz_assemble
+    where AssembleId = #{assembleid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="oracle.mybatis.vo.BizAssembleExample">
+    delete from biz_assemble
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="oracle.mybatis.vo.BizAssemble">
+    insert into biz_assemble (AssembleId, PartsId, ProductId, 
+      PartsCount)
+    values (#{assembleid,jdbcType=INTEGER}, #{partsid,jdbcType=INTEGER}, #{productid,jdbcType=INTEGER}, 
+      #{partscount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="oracle.mybatis.vo.BizAssemble">
+    insert into biz_assemble
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="assembleid != null">
+        AssembleId,
+      </if>
+      <if test="partsid != null">
+        PartsId,
+      </if>
+      <if test="productid != null">
+        ProductId,
+      </if>
+      <if test="partscount != null">
+        PartsCount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="assembleid != null">
+        #{assembleid,jdbcType=INTEGER},
+      </if>
+      <if test="partsid != null">
+        #{partsid,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="partscount != null">
+        #{partscount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="oracle.mybatis.vo.BizAssembleExample" resultType="java.lang.Long">
+    select count(*) from biz_assemble
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update biz_assemble
+    <set>
+      <if test="record.assembleid != null">
+        AssembleId = #{record.assembleid,jdbcType=INTEGER},
+      </if>
+      <if test="record.partsid != null">
+        PartsId = #{record.partsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productid != null">
+        ProductId = #{record.productid,jdbcType=INTEGER},
+      </if>
+      <if test="record.partscount != null">
+        PartsCount = #{record.partscount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update biz_assemble
+    set AssembleId = #{record.assembleid,jdbcType=INTEGER},
+      PartsId = #{record.partsid,jdbcType=INTEGER},
+      ProductId = #{record.productid,jdbcType=INTEGER},
+      PartsCount = #{record.partscount,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="oracle.mybatis.vo.BizAssemble">
+    update biz_assemble
+    <set>
+      <if test="partsid != null">
+        PartsId = #{partsid,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null">
+        ProductId = #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="partscount != null">
+        PartsCount = #{partscount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where AssembleId = #{assembleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="oracle.mybatis.vo.BizAssemble">
+    update biz_assemble
+    set PartsId = #{partsid,jdbcType=INTEGER},
+      ProductId = #{productid,jdbcType=INTEGER},
+      PartsCount = #{partscount,jdbcType=INTEGER}
+    where AssembleId = #{assembleid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getlist" resultType="map" parameterType="Integer">
+  select b1.AssembleId,b1.partsid,b1.partscount,partsname from biz_assemble b1,biz_parts b2
+   where b1.PartsId=b2.PartsId and productid=#{orderid}
+  </select>
+  
+  <delete id="deleteById">
+    delete from biz_assemble where partsid=#{partsid} and productid=#{orderid} and assembleid=#{assembleid}
+  </delete>
+  
+  <select id="getPartsidByOrderid" resultType="Integer" parameterType="Integer">
+  select PartsId from biz_assemble where ProductId=#{orderid}
+  </select>
+</mapper>
